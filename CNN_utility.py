@@ -111,6 +111,7 @@ def Confusion_matrix(actual, predictions , class_names):
     plt.ylabel('Actal Values')
     plt.xlabel('Predicted Values')
     plt.show()
+    plt.savefig('Confusion_matrix.png')
     
 def gui_model(model):
     return visualkeras.layered_view(model, legend=True)
@@ -181,6 +182,7 @@ def dataset_sample(class_names, images, labels):
         plt.xlabel(class_names[labels[i]])
         j=j+1
     plt.show()
+    plt.savefig('dataset_sample.png')
     
     
 def system():
@@ -188,3 +190,30 @@ def system():
     print("CPU cores:", multiprocessing.cpu_count())
     print('RAM:', (psutil.virtual_memory().total / 1e9),'GB')
     print(tf.config.list_physical_devices('GPU'))
+    
+    
+    
+def plot_accuracy_loss(history):
+    y = ['accuracy','loss']
+    for x in y:
+        fig = plt.figure(figsize=(10,5))
+        
+        plt.plot(history.history[x],'bo--', label = x )
+        plt.plot(history.history['val_'+x], 'ro--', label ='val_'+x)
+        plt.title("Train_"+x + " vs Val_"+x)
+        plt.ylabel(x)
+        plt.xlabel("epochs")
+        plt.legend()
+        plt.legend()
+        plt.show()
+        plt.savefig(f'{x}.png')
+        
+        
+def Cbars(evaluate,evaluate1):
+    accuracy =[evaluate[1],evaluate1[1]]
+    lable = ["Quantum", "Classical"]
+    barlist = plt.bar(lable,accuracy)
+    barlist[0].set_color('b')
+    barlist[1].set_color('r')
+    plt.title("Quantum Vs Classical")
+    plt.show()
